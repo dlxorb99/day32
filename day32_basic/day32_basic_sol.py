@@ -1,6 +1,6 @@
 # day32_basic_sol.py
 # 주제 :
-# python streamlit run day32_basic_sol.py
+# python -m streamlit run day32_basic_sol.py
 
 
 import psycopg
@@ -39,12 +39,9 @@ def main():
             cal_result = cal_shipping_fee(weights)
             if submitted:
                 st.success('저장되었습니다')
-            cal_fee = st.session_state.cal_result.append(cal_result)
-            rows = list_basic(weights)
-            st.dataframe({
-                'ID': [x['id'] for x in rows],
-                '요금': [cal_fee]
-            })
+                save_basic(label, weights, cal_result)
+                rows = list_basic()
+                st.dataframe(rows)
     except psycopg.Error:
         st.error('DB연결을 확인하세요')
 
